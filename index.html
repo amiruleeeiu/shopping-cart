@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+   <title>Shopping Cart</title>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" />
+   <link href="style.css" rel="stylesheet">
+</head>
+
+<body>
+
+   <section>
+      <div class="container">
+         <div class="cart">
+            <h1 class="text-center">Order Summary</h1>
+            <div class="col-md-12 col-lg-10 mx-auto">
+               <div id="product1-area" class="cart-item">
+                  <div class="row">
+                     <div class="col-md-7 center-item">
+                        <img src="images/product-1.png" alt="">
+                        <h5>iPhone 11 128GB Black</h5>
+                     </div>
+
+                     <div id="mobile-area" class="col-md-5 center-item">
+                        <div class="input-group number-spinner">
+                           <button class="btn btn-default"><i id="removeProduct1" class="fas fa-minus"></i></button>
+                           <input type="text" class="form-control text-center" id="product1Value" value="1">
+                           <button class="btn btn-default"><i id="addProduct1" class="fas fa-plus"></i></button>
+                        </div>
+                        <h5>$ <span id="product1Price">1219</span> </h5>
+                        <img id="item1Remove" src="images/remove.png" alt="" class="remove-item">
+                     </div>
+                  </div>
+               </div>
+
+               <div id="product2-area" class="cart-item">
+                  <div class="row">
+                     <div class="col-md-7 center-item mx-auto">
+                        <img src="images/product-2.png" alt="">
+                        <h5>iPhone 11 Silicone Case - Black</h5>
+                     </div>
+                     <div class="col-md-5 center-item">
+                        <div  class="input-group number-spinner">
+                           <button class="btn btn-default"><i id="removeProduct2" class="fas fa-minus"></i></button>
+                           <input type="text" class="form-control text-center" id="product2Value" value="1">
+                           <button class="btn btn-default"><i class="fas fa-plus" id="addProduct2" ></i></button>
+
+                        </div>
+                        <h5>$ <span id="product2Price">59</span> </h5>
+                        <img id="item2Remove" src="images/remove.png" alt="" class="remove-item">
+                     </div>
+                  </div>
+               </div>
+
+               <div class="cart-item">
+                  <div class="row">
+
+                     <div class="col-md-8">
+                        <h5>Subtotal: </h5>
+                        <h5>Tax:</h5>
+                        <h5>Total:</h5>
+                     </div>
+
+                     <div class="col-md-4 status">
+                        <h5>$ <span id="subTotal">1278</span> </h5>
+                        <h5>$ <span id="tax">0</span> </h5>
+                        <h5>$ <span id="allTotal">1278</span></h5>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-md-12 pt-4 pb-4">
+                  <button id="checkOut" type="button" class="btn btn-success check-out">Check Out</button>
+               </div>
+            </div>
+         </div>
+      </div>
+   </section>
+
+   <script>
+      const addProduct1=document.getElementById("addProduct1");
+      addProduct1.addEventListener("click",function(){
+         document.getElementById("product1Value").value++;
+         productCalculation("product1Value","product1Price",1219);
+         subTotal("subTotal",1219);
+         allTotal("allTotal");
+      });
+
+      const removeProduct1=document.getElementById("removeProduct1");
+      removeProduct1.addEventListener("click",function(){
+         negationItemAlert("product1Value");
+         productCalculation("product1Value","product1Price",1219);
+         subTotal("subTotal",-1*1219);
+         allTotal("allTotal");
+         
+      });
+
+      const addProduct2=document.getElementById("addProduct2");
+      addProduct2.addEventListener("click",function(){
+         document.getElementById("product2Value").value++;     
+         productCalculation("product2Value","product2Price",59);
+         subTotal("subTotal",59);
+         allTotal("allTotal");
+         
+      });
+
+      const removeProduct2=document.getElementById("removeProduct2");
+      removeProduct2.addEventListener("click",function(){
+         negationItemAlert("product2Value");   
+         productCalculation("product2Value","product2Price",59);
+         subTotal("subTotal",-1*59);
+         allTotal("allTotal");
+      });
+
+      // remove product
+       removeItem("item1Remove","product1-area");
+       removeItem("item2Remove","product2-area");
+
+      // check out
+      const checkOut=document.getElementById("checkOut");
+      checkOut.addEventListener("click",function(){
+         alert("Do you want to check out this item");
+      });
+
+      // product remove and add
+      function productCalculation(product,price,value){
+         let productNumber=document.getElementById(product).value;
+         let productPrice=productNumber*value;
+         document.getElementById(price).innerText=productPrice;
+
+      }
+      // negative item alert
+      function negationItemAlert(id){
+         document.getElementById(id).value--;
+         const value=document.getElementById(id).value;
+         const valuenumber=parseFloat(value);
+         if(valuenumber<0){
+            alert("Negative Item is not possible");
+         }
+      }
+
+      // sub total function
+      function subTotal(id,value){
+         const subTotal=document.getElementById(id).innerText;
+         const subTotalPrice=parseFloat(subTotal);
+         allSubTotal=subTotalPrice+value;
+         document.getElementById(id).innerText=allSubTotal;
+      }
+
+      //all item total price function
+      function allTotal(id){
+         const subTotal=document.getElementById("subTotal").innerText;
+         const subTotalPrice=parseFloat(subTotal);
+         const tax=document.getElementById("tax").innerText;
+         const taxPrice=parseFloat(tax);
+         totalPrice=subTotalPrice+taxPrice;
+         document.getElementById(id).innerText=totalPrice;
+      }
+
+      // remove product function
+      function removeItem(btn,area){
+         const remove=document.getElementById(btn);
+         remove.addEventListener("click",function(){   
+            const product1Area=document.getElementById(area);
+            product1Area.style.display="none";
+         });
+       }
+
+
+   </script>
+
+
+</body>
+
+</html>
