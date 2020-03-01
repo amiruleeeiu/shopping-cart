@@ -15,8 +15,16 @@
    <section>
       <div class="container">
          <div class="cart">
-            <h1 class="text-center">Order Summary</h1>
+            
+            
             <div class="col-md-12 col-lg-10 mx-auto">
+               <div class="d-flex justify-content-between">
+                  <h1>Order summary</h1>
+                  <div>
+                     <button class="btn btn-success check-out sing">Sing up</button>
+                     <button class="btn btn-success check-out">Sing in</button>
+                  </div>
+               </div>
                <div id="product1-area" class="cart-item">
                   <div class="row">
                      <div class="col-md-7 center-item">
@@ -80,6 +88,10 @@
    </section>
 
    <script>
+
+      document.getElementById("product1Value").disabled=true;
+      document.getElementById("product2Value").disabled=true;
+
       const addProduct1=document.getElementById("addProduct1");
       addProduct1.addEventListener("click",function(){
          document.getElementById("product1Value").value++;
@@ -138,7 +150,10 @@
          const valuenumber=parseFloat(value);
          if(valuenumber<0){
             alert("Negative Item is not possible");
+            document.getElementById(id).value=0;
+            subTotal("subTotal",0);
          }
+         
       }
 
       // sub total function
